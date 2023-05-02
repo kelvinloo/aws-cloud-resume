@@ -1,8 +1,8 @@
 // Default aws region 
 provider "aws" {
   region     = var.aws_region
-  access_key = var.aws_access_key
-  secret_key = var.aws_secret_key
+  //access_key = var.aws_access_key
+  //secret_key = var.aws_secret_key
   profile    = "resumeprofile"
 }
 
@@ -10,13 +10,7 @@ provider "aws" {
 provider "aws" {
   alias      = "acm"
   region     = "us-east-1"
-  access_key = var.aws_access_key
-  secret_key = var.aws_secret_key
+  //access_key = var.aws_access_key
+  //secret_key = var.aws_secret_key
   profile    = "resumeprofile"
-}
-
-terraform{
-  backend "s3"{
-
-  }
 }
