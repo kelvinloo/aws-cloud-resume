@@ -33,4 +33,4 @@ Created an identity provider on AWS IAM for GitHub to be able to use AWS resourc
 
 ## Final thoughts
 Overall, project was challenging but a good opportunity to test knowledge gained as result of studying and completing Amazon’s solution architect associate certification. Additionally including a github action to destroy the AWS architecture could be added in the future.
-Links to related repositories: [frontend](https://github.com/kelvinloo/aws-cloud-resume) / [backend](https://github.com/kelvinloo/aws-cloud-resume-terraform) and the website itself [https:www.kelvinloo.com](https://www.kelvinloo.com)
+Links to related repositories: [frontend](https://github.com/kelvinloo/aws-cloud-resume) / [backend](https://github.com/kelvinloo/aws-cloud-resume-terraform) and the website itself [https://www.kelvinloo.com](https://www.kelvinloo.com)
