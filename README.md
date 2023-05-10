@@ -11,7 +11,10 @@ Services used:
 •	Route 53
 •	Terraform
 •	GitHub Actions
- 
+
+## AWS architecture
+![AWS Diagram](AWS Diagram.jpg)
+
 ## HTML/CSS
 Wrote resume into a bootstrap template source by davidtmiller: https://github.com/startbootstrap/startbootstrap-resume
 Uploaded website files on Amazon S3, tested static website hosting by making bucket public.
