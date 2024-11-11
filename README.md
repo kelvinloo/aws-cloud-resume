@@ -1,6 +1,7 @@
 # AWS Cloud Resume Website
 
-Goal: Deploy awebsite with my resume backed by AWS serverless architecture. Implement a CI/CD pipeline using Infrastructure as code so website can be updated remotely over the Internet.
+Goal: To deploy a website with my resume backed by AWS serverless architecture and Implement a CI/CD pipeline using Infrastructure as code so website can be updated remotely over the Internet.
+
 Services used:
 •	S3
 •	CloudFront
@@ -16,24 +17,53 @@ Services used:
 ![Image](https://github.com/kelvinloo/aws-cloud-resume/blob/f335aacd91e63952597d51dc3bba11b2b7d75ef6/AWS%20Diagram.jpg)
 
 ## HTML/CSS
-Wrote resume into a bootstrap template source by davidtmiller: https://github.com/startbootstrap/startbootstrap-resume
-Uploaded website files on Amazon S3, tested static website hosting by making bucket public.
+  To save time I imported and formatted my resume into a bootstrap template by davidtmiller: https://github.com/startbootstrap/startbootstrap-resume
+  Following that, I uploaded my website files on Amazon S3, and tested static website hosting feature in S3 by making the S3 bucket public. My website was now hosted on S3 successfully.
 
 ## HTTPS/DNS
-Purchased a domain name kelvinloo.com from Amazon Route53 and setup CloudFront with S3 as the origin. Created certificate via Certificate Manager and linked it to CloudFront and changed default behaviour to redirect to HTTPS. Set up Hosted Zone entries for domain name and records to use www.kelvinloo.com.
-Encountered issue with certificate not validating even after 30 minutes, had to manually edit name servers for the registered domain which resolves the issue.
 
-## JavaScript and View counter
-Created a DynamoDB table to store the number of page visits, a Lambda function will process the retrieval of this visit count and update the value stored in DynamoDB. Set up function URL to test by CURLing the function URL and the count updates by 1 correctly on both the table and CURL result. Added a Javascript file to call the API and display on website.
-Setup API gateway to front the Lambda function and enabled rate limiting and API key to deter bad actors from abusing API and causing excessive billing on AWS. Set X-API key in Cloudfront origin for the API gateway so CloudFront can call the API when a request is made.
+  Domain Registration: I purchased the domain name kelvinloo.com through Amazon Route 53.
+  Content Delivery Network (CDN): I set up CloudFront, a CDN service, to deliver website content efficiently. S3 buckets served as the origin for the CDN.
+  SSL Certificate: I created a security certificate via Amazon Certificate Manager and linked it to CloudFront. This ensures secure communication (HTTPS) for website visitors.
+  Forced HTTPS: I configured CloudFront to redirect all traffic to the secure HTTPS protocol.
+  Domain Management: I created Hosted Zone entries in Route 53 for both the kelvinloo.com domain and a subdomain (www.kelvinloo.com).
+
+## JavaScript and website visitor counter
+Added a website visitor counter, the following architecture was used to implement this feature:
+
+Data Storage and Processing:
+
+  DynamoDB Table: Created a DynamoDB table to store the number of page visits.
+  Lambda Function: Developed a Lambda function to retrieve the current visit count from DynamoDB, increment it, and update the table.
+  Function URL: Deployed the Lambda function as a Function URL for testing. Successfully tested the function using cURL, verifying correct count increments in both the DynamoDB table and the cURL response.
+  Frontend Integration: Integrated a JavaScript file to call the API and display the updated visit count on the website.
+
+API Gateway:
+
+  API Gateway: Configured an API Gateway to expose the Lambda function as an API endpoint.
+  Rate Limiting and API Key: Implemented rate limiting and API key authentication to mitigate potential cost overages.
+  Cloudfront Integration: Set up CloudFront to call the API Gateway endpoint, with the X-API-Key header configured to authenticate requests.
 
 ## Infrastructure as Code (Terraform)
-Converted architecture to infrastructure as code via Terraform, by reading tutorials online and comparing deployed infrastructure on AWS services I was able to reproduce the same architecture as if I was to manually create the AWS architecture through Amazon console. Terraform easily allows for tear down and rebuild of infrastructure as required, saving costs during development and testing.
+I migrated the architecture to Infrastructure as Code using Terraform. By following online tutorials and forums, I successfully replicated the AWS infrastructure that was previously manually configured. This Terraform configuration can be reused or adapted for future website deployments.
 
 ## CI/CD pipeline
-Made two GitHub repositories, one for the HTML/CSS/Javascript data and the other for Terraform configuration. Added gitignore so AWS access and secret key is not made public and setup a separate private S3 bucket as a backend for storing these secrets instead. 
-Created an identity provider on AWS IAM for GitHub to be able to use AWS resources in my AWS account, create a role to allow GitHub access to services required for this deployment. Stored AWS secrets inside GitHub secrets in order for GitHub actions to upload website to S3 bucket on a commit and update Terraform configuration on commit as well.
+I created two separate GitHub repositories:
+
+  Frontend Repository: This repository contains the HTML, CSS, and JavaScript code for my resume website.
+  Infrastructure Repository: This repository holds the Terraform configuration files that define the underlying AWS infrastructure.
+
+To protect sensitive information like AWS access keys and secret keys, I implemented the following measures:
+
+  .gitignore: A .gitignore file was added to the infrastructure repository to prevent accidental exposure of these secrets.
+  Private S3 Bucket: A private S3 bucket was configured as a backend for storing the sensitive information, ensuring it remains secure and inaccessible to the public."
+
+To enable GitHub Actions to automate AWS tasks, I created an IAM role granting necessary permissions to GitHub. This allows GitHub Actions to:
+
+  Deploy to S3: Upload website files to an S3 bucket upon a Git commit.
+  Manage Infrastructure: Update Terraform configurations and trigger deployments on commit.
 
 ## Final thoughts
-Overall, project was challenging but a good opportunity to test knowledge gained as result of studying and completing Amazon’s solution architect associate certification. Additionally including a github action to destroy the AWS architecture could be added in the future.
+This project proved to be a valuable challenge, allowing me to solidify my understanding of AWS concepts and practices gained from the Solutions Architect Associate certification.
+
 Links to related repositories: [frontend](https://github.com/kelvinloo/aws-cloud-resume) / [backend](https://github.com/kelvinloo/aws-cloud-resume-terraform) and the website itself [https://www.kelvinloo.com](https://www.kelvinloo.com)
